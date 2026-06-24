@@ -38,6 +38,7 @@ Route::get('diagram/login', function () {
     return redirect()->route('login');
 });
 Route::get('diagram/{prodi:kode}', 'HomeController@radarDiagram');
+Route::get('akreditasi', 'AkreditasiController@publicIndex')->name('akreditasi.public');
 Route::get('site-media/{filename}', 'SiteSettingController@media')
     ->where('filename', '[A-Za-z0-9._-]+')
     ->name('site-settings.media');
@@ -169,6 +170,12 @@ Route::middleware(['auth', 'cekRole:Admin,Ketua LPM,Ketua Program Studi,Dosen,UP
     Route::middleware('cekRole:Admin')->group(function () {
         Route::get('pengaturan/identitas-situs', 'SiteSettingController@edit')->name('site-settings.edit');
         Route::put('pengaturan/identitas-situs', 'SiteSettingController@update')->name('site-settings.update');
+        Route::get('pengaturan/akreditasi', 'AkreditasiController@index')->name('akreditasi.admin.index');
+        Route::post('pengaturan/akreditasi', 'AkreditasiController@store')->name('akreditasi.admin.store');
+        Route::put('pengaturan/akreditasi/{akreditasi}', 'AkreditasiController@update')
+            ->name('akreditasi.admin.update');
+        Route::delete('pengaturan/akreditasi/{akreditasi}', 'AkreditasiController@destroy')
+            ->name('akreditasi.admin.destroy');
     });
 
 //DATA USER

@@ -1,7 +1,7 @@
 @extends('template.BaseView')
 @section('content')
   <div class="row">
-        <div class="col">
+        <div class="col mb-4">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">{{ $siteSettings['system_name'] }}</h4>

@@ -121,6 +121,12 @@
             <i class="fa-solid fa-magnifying-glass"></i>
             <span>Multi Search</span></a>
     </li>
+    <li class="nav-item {{ request()->routeIs('akreditasi.admin.*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('akreditasi.admin.index') }}">
+            <i class="fas fa-award"></i>
+            <span>Akreditasi</span>
+        </a>
+    </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pengaturan" aria-expanded="true"
             aria-controls="pengaturan">

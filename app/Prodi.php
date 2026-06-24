@@ -19,6 +19,11 @@ class Prodi extends Model
         return $this->belongsTo(Berkas::class);
     }
 
+    public function akreditasi()
+    {
+        return $this->hasOne(Akreditasi::class);
+    }
+
     public function scopeNotIn($query)
     {
         return $query->whereNotIn('id', [0])->orderBy('name', 'ASC')->get();

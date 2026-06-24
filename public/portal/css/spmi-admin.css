@@ -1,3 +1,27 @@
+.accreditation-admin-table-card {
+    border: 1px solid #e3e8ef;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.accreditation-admin-table-card .card-header {
+    background: #fff;
+    border-bottom: 1px solid #e8edf2;
+}
+
+.accreditation-admin-table-card table th {
+    background: #f7f9fb;
+    color: #536174;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.accreditation-admin-table-card table td {
+    color: #657285;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
 .admin-sidebar-locked .admin-sidebar-compact {
     min-height: 100vh;
     overflow: visible !important;

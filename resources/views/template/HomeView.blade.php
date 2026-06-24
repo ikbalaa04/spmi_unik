@@ -70,6 +70,8 @@
                     <li><a class="nav-link scrollto {{ request()->is('diagram*') ? 'active' : '' }}"
                             href="{{ route('diagram') }}">Diagram
                             Pencapaian</a></li>
+                    <li><a class="nav-link scrollto {{ request()->is('akreditasi') ? 'active' : '' }}"
+                            href="{{ route('akreditasi.public') }}">Akreditasi</a></li>
                     <li class="dropdown"><a href="#"><span>Search</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
                             <li><a href="{{ route('multipleSearch') }}">Multiple Search</a></li>
