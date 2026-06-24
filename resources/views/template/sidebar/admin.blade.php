@@ -3,7 +3,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
         <div class="sidebar-brand-icon">
-            <img src="{{ asset(\App\SiteSetting::imagePath($siteSettings, 'logo_path')) }}"
+            <img src="{{ \App\SiteSetting::imageUrl($siteSettings, 'logo_path') }}"
                 onerror="this.onerror=null;this.src='{{ asset('home/img/favicon.png') }}';" alt=""
                 style="width: 36px; height: 36px; object-fit: contain;">
         </div>

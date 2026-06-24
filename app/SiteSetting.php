@@ -87,15 +87,24 @@ class SiteSetting extends Model
         return $values;
     }
 
-    public static function imagePath(array $settings, $key)
+    public static function imageUrl(array $settings, $key)
     {
         $defaults = static::defaults();
         $path = isset($settings[$key]) ? ltrim($settings[$key], '/') : null;
 
-        if ($path && is_file(public_path($path))) {
-            return $path;
+        if ($path && strpos($path, 'storage/site-settings/') === 0) {
+            $filename = basename($path);
+            $storedFile = storage_path('app/public/site-settings/' . $filename);
+
+            if (is_file($storedFile)) {
+                return route('site-settings.media', ['filename' => $filename]);
+            }
         }
 
-        return $defaults[$key];
+        if ($path && is_file(public_path($path))) {
+            return asset($path);
+        }
+
+        return asset($defaults[$key]);
     }
 }

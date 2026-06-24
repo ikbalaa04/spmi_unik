@@ -9,6 +9,24 @@ use Illuminate\Support\Facades\Storage;
 
 class SiteSettingController extends Controller
 {
+    public function media($filename)
+    {
+        if (!preg_match('/^[A-Za-z0-9._-]+$/', $filename)) {
+            abort(404);
+        }
+
+        $path = storage_path('app/public/site-settings/' . $filename);
+
+        if (!is_file($path)) {
+            abort(404);
+        }
+
+        return response()->file($path, [
+            'Cache-Control' => 'public, max-age=86400',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
+    }
+
     public function edit()
     {
         return view('settings.site', [

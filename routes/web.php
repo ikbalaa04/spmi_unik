@@ -38,6 +38,9 @@ Route::get('diagram/login', function () {
     return redirect()->route('login');
 });
 Route::get('diagram/{prodi:kode}', 'HomeController@radarDiagram');
+Route::get('site-media/{filename}', 'SiteSettingController@media')
+    ->where('filename', '[A-Za-z0-9._-]+')
+    ->name('site-settings.media');
 
 Route::middleware(['auth', 'cekRole:Admin,Ketua LPM,Ketua Program Studi,Dosen,UPPS,Mahasiswa,Alumni'])->group(function () {
 //GET PRODI AND JENJANG

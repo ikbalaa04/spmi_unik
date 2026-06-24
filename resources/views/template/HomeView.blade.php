@@ -57,7 +57,7 @@
         <div class="container d-flex align-items-center">
 
             <a href="{{ route('home') }}" class="logo me-auto d-flex align-items-center">
-                <img src="{{ asset(\App\SiteSetting::imagePath($siteSettings, 'logo_path')) }}"
+                <img src="{{ \App\SiteSetting::imageUrl($siteSettings, 'logo_path') }}"
                     onerror="this.onerror=null;this.src='{{ asset('home/img/favicon.png') }}';"
                     alt="Logo {{ $siteSettings['campus_name'] }}" class="img-fluid me-2">
                 @if ($siteSettings['system_name'])

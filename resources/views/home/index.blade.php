@@ -8,7 +8,7 @@
             <div class="carousel-inner" role="listbox">
                 @for ($slide = 1; $slide <= 3; $slide++)
                     <div class="carousel-item {{ $slide === 1 ? 'active' : '' }}"
-                        style="background-image: url('{{ asset(\App\SiteSetting::imagePath($siteSettings, 'banner_' . $slide . '_path')) }}')">
+                        style="background-image: url('{{ \App\SiteSetting::imageUrl($siteSettings, 'banner_' . $slide . '_path') }}')">
                         <div class="carousel-container">
                             <div class="container">
                                 <h2 class="animate__animated animate__fadeInDown">

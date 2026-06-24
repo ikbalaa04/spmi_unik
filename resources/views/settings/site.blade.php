@@ -52,7 +52,7 @@
                 <div class="form-group mb-0">
                     <label>Logo</label>
                     <div class="d-flex align-items-center">
-                        <img src="{{ asset(\App\SiteSetting::imagePath($settings, 'logo_path')) }}"
+                        <img src="{{ \App\SiteSetting::imageUrl($settings, 'logo_path') }}"
                             onerror="this.onerror=null;this.src='{{ asset('home/img/favicon.png') }}';" alt=""
                             class="mr-3 border rounded p-2"
                             style="width: 90px; height: 90px; object-fit: contain;">
@@ -73,7 +73,7 @@
                 @for ($slide = 1; $slide <= 3; $slide++)
                     <div class="border rounded p-3 mb-4">
                         <h6 class="font-weight-bold">Slide {{ $slide }}</h6>
-                        <img src="{{ asset(\App\SiteSetting::imagePath($settings, 'banner_' . $slide . '_path')) }}"
+                        <img src="{{ \App\SiteSetting::imageUrl($settings, 'banner_' . $slide . '_path') }}"
                             onerror="this.onerror=null;this.src='{{ asset('home/img/slide/slide-' . $slide . '.jpg') }}';"
                             class="img-fluid rounded mb-3" alt="" style="width: 100%; max-height: 240px; object-fit: cover;">
                         <div class="form-group">
@@ -114,7 +114,7 @@
                     <label>Gambar Pendukung</label>
                     <div class="row align-items-center">
                         <div class="col-md-4 mb-3 mb-md-0">
-                            <img src="{{ asset(\App\SiteSetting::imagePath($settings, 'about_image_path')) }}"
+                            <img src="{{ \App\SiteSetting::imageUrl($settings, 'about_image_path') }}"
                                 onerror="this.onerror=null;this.src='{{ asset('home/img/about.png') }}';"
                                 class="img-fluid rounded border" alt="">
                         </div>
