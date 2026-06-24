@@ -30,6 +30,11 @@ class SiteSetting extends Model
         'about_description',
     ];
 
+    public function setSystemNameAttribute($value)
+    {
+        $this->attributes['system_name'] = $value ?: '';
+    }
+
     public static function defaults()
     {
         return [
