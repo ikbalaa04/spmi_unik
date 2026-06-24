@@ -26,9 +26,21 @@ class ElementController extends Controller
         ]);
     }
 
-    public function tambahElement()
+    public function tambahElement(Request $request)
     {
-        return view('element.tambah');
+        $selectedProdi = null;
+        $prodiReference = $request->query('prodi');
+
+        if ($prodiReference) {
+            $selectedProdi = Prodi::with('jenjang')
+                ->where('kode', $prodiReference)
+                ->orWhere('id', $prodiReference)
+                ->first();
+        }
+
+        return view('element.tambah', [
+            'selectedProdi' => $selectedProdi,
+        ]);
     }
 
     public function store(Request $request)
@@ -215,9 +227,12 @@ class ElementController extends Controller
 
     public function putAkreditas(Element $element, Request $request)
     {
+        $request->validate([
+            'min' => 'required|numeric|min:0',
+        ]);
 
         $prodi = Prodi::where('id', $element->prodi_id)->first();
-        if ($request->score >= floatval($request->min)) {
+        if ($element->score_hitung >= floatval($request->min)) {
             $keputusan = "Y";
             $pesan = '<div class="alert alert-info alert-dismissible fade show" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -254,9 +269,12 @@ class ElementController extends Controller
 
     public function putUnggul(Element $element, Request $request)
     {
+        $request->validate([
+            'min' => 'required|numeric|min:0',
+        ]);
 
         $prodi = Prodi::where('id', $element->prodi_id)->first();
-        if ($request->score >= floatval($request->min)) {
+        if ($element->score_hitung >= floatval($request->min)) {
             $keputusan = "Y";
             $pesan = '<div class="alert alert-info alert-dismissible fade show" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -293,9 +311,12 @@ class ElementController extends Controller
 
     public function putBaik(Element $element, Request $request)
     {
+        $request->validate([
+            'min' => 'required|numeric|min:0',
+        ]);
 
         $prodi = Prodi::where('id', $element->prodi_id)->first();
-        if ($request->score >= floatval($request->min)) {
+        if ($element->score_hitung >= floatval($request->min)) {
             $keputusan = "Y";
             $pesan = '<div class="alert alert-info alert-dismissible fade show" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

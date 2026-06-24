@@ -109,7 +109,8 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Aksi</h4>
-                    <a href="{{ route('tambah-element') }}" class="btn btn-primary btn-sm float-right">
+                    <a href="{{ route('tambah-element', ['prodi' => $p->kode]) }}"
+                        class="btn btn-primary btn-sm float-right">
                         Tambah Element
                     </a>
                 </div>

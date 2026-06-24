@@ -34,4 +34,9 @@ class Element extends Model
         return $this->belongsTo(Indikator::class);
     }
 
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class);
+    }
+
 }

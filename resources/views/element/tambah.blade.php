@@ -41,15 +41,35 @@
                     <div class="form-row">
                         <div class="form-group col-lg-6">
                             <label for="jen"><i class="fas fa-graduation-cap"></i> Jenjang Pendidikan</label>
-                            <select class="form-control" name="jenjang_id" id="jen" required>
-                                <option value="">Memuat jenjang...</option>
-                            </select>
+                            @if ($selectedProdi)
+                                <input type="hidden" name="jenjang_id" value="{{ $selectedProdi->jenjang_id }}">
+                                <select class="form-control" id="jen" disabled>
+                                    <option value="{{ $selectedProdi->jenjang_id }}" selected>
+                                        {{ $selectedProdi->jenjang ? $selectedProdi->jenjang->name : 'Jenjang terpilih' }}
+                                    </option>
+                                </select>
+                                <small class="form-text text-muted">Terisi otomatis dari program studi aktif.</small>
+                            @else
+                                <select class="form-control" name="jenjang_id" id="jen" required>
+                                    <option value="">Memuat jenjang...</option>
+                                </select>
+                            @endif
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="pro"><i class="fas fa-university"></i> Program Studi</label>
-                            <select class="form-control" name="prodi_id" id="pro" required disabled>
-                                <option value="">Pilih jenjang terlebih dahulu</option>
-                            </select>
+                            @if ($selectedProdi)
+                                <input type="hidden" name="prodi_id" value="{{ $selectedProdi->id }}">
+                                <select class="form-control" id="pro" disabled>
+                                    <option value="{{ $selectedProdi->id }}" selected>
+                                        {{ $selectedProdi->kode }} — {{ $selectedProdi->name }}
+                                    </option>
+                                </select>
+                                <small class="form-text text-muted">Elemen akan ditambahkan ke program studi ini.</small>
+                            @else
+                                <select class="form-control" name="prodi_id" id="pro" required disabled>
+                                    <option value="">Pilih jenjang terlebih dahulu</option>
+                                </select>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -127,6 +147,9 @@
 @section('script')
     <script>
         $(document).ready(function() {
+            var hasSelectedProdi = @json((bool) $selectedProdi);
+            var selectedJenjangId = @json($selectedProdi ? $selectedProdi->jenjang_id : null);
+
             var fields = {
                 jen: $('#jen'),
                 pro: $('#pro'),
@@ -183,32 +206,45 @@
                 });
             }
 
-            loadOptions('jen', '{{ route('getJen') }}');
+            if (hasSelectedProdi) {
+                loadOptions('l1', '{{ route('l1') }}', {
+                    jenjang_id: selectedJenjangId
+                });
+                loadOptions('ind', '{{ route('getInd') }}', {
+                    jenjang_id: selectedJenjangId
+                });
+            } else {
+                loadOptions('jen', '{{ route('getJen') }}');
+            }
 
-            fields.jen.on('change', function() {
-                clearField('pro', 'Pilih jenjang terlebih dahulu');
-                clearField('l1');
-                clearField('l2');
-                clearField('l3');
-                clearField('l4');
-                clearField('ind', 'Pilih jenjang terlebih dahulu');
+            if (!hasSelectedProdi) {
+                fields.jen.on('change', function() {
+                    clearField('pro', 'Pilih jenjang terlebih dahulu');
+                    clearField('l1');
+                    clearField('l2');
+                    clearField('l3');
+                    clearField('l4');
+                    clearField('ind', 'Pilih jenjang terlebih dahulu');
 
-                if (this.value) {
-                    loadOptions('pro', '{{ route('getPro') }}', { jenjang_id: this.value });
-                    loadOptions('ind', '{{ route('getInd') }}', { jenjang_id: this.value });
-                }
-            });
+                    if (this.value) {
+                        loadOptions('pro', '{{ route('getPro') }}', { jenjang_id: this.value });
+                        loadOptions('ind', '{{ route('getInd') }}', { jenjang_id: this.value });
+                    }
+                });
+            }
 
-            fields.pro.on('change', function() {
-                clearField('l1');
-                clearField('l2');
-                clearField('l3');
-                clearField('l4');
+            if (!hasSelectedProdi) {
+                fields.pro.on('change', function() {
+                    clearField('l1');
+                    clearField('l2');
+                    clearField('l3');
+                    clearField('l4');
 
-                if (this.value) {
-                    loadOptions('l1', '{{ route('l1') }}', { jenjang_id: fields.jen.val() });
-                }
-            });
+                    if (this.value) {
+                        loadOptions('l1', '{{ route('l1') }}', { jenjang_id: fields.jen.val() });
+                    }
+                });
+            }
 
             fields.l1.on('change', function() {
                 clearField('l2');
@@ -238,7 +274,12 @@
             });
 
             $('#reset-element').on('click', function() {
-                fields.jen.val(null).trigger('change');
+                if (hasSelectedProdi) {
+                    fields.l1.val(null).trigger('change');
+                    fields.ind.val(null).trigger('change');
+                } else {
+                    fields.jen.val(null).trigger('change');
+                }
                 $('#bobot').val('');
             });
         });

@@ -1,3 +1,114 @@
+.requirement-form-card {
+    max-width: 1120px;
+}
+
+.requirement-context {
+    align-items: flex-start;
+    border-bottom: 1px solid #edf0f4;
+    display: flex;
+    gap: 16px;
+    padding: 26px 0 22px;
+}
+
+.requirement-context-icon {
+    align-items: center;
+    background: #e8f8f0;
+    border-radius: 11px;
+    color: #00aa5a;
+    display: flex;
+    flex: 0 0 48px;
+    font-size: 19px;
+    height: 48px;
+    justify-content: center;
+}
+
+.requirement-context span,
+.requirement-indicator > span {
+    color: #00aa5a;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.requirement-context h3 {
+    color: #344054;
+    font-size: 20px;
+    font-weight: 750;
+    margin: 6px 0 5px;
+}
+
+.requirement-context p {
+    color: #7d8998;
+    font-size: 13px;
+    margin: 2px 0;
+}
+
+.requirement-indicator {
+    background: #f7f9fb;
+    border: 1px solid #e5ebef;
+    border-radius: 11px;
+    color: #667285;
+    line-height: 1.7;
+    margin: 22px 0;
+    padding: 18px 20px;
+}
+
+.requirement-indicator > div {
+    margin-top: 8px;
+}
+
+.requirement-indicator p:last-child {
+    margin-bottom: 0;
+}
+
+.requirement-score-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+}
+
+.requirement-current-score {
+    background: linear-gradient(135deg, #174d72, #236c91);
+    border-radius: 13px;
+    color: #fff;
+    padding: 22px;
+}
+
+.requirement-current-score span,
+.requirement-current-score strong,
+.requirement-current-score small {
+    display: block;
+}
+
+.requirement-current-score span {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.requirement-current-score strong {
+    color: #fff;
+    font-size: 36px;
+    line-height: 1;
+    margin: 12px 0 10px;
+}
+
+.requirement-current-score small {
+    color: rgba(255, 255, 255, 0.66);
+}
+
+.requirement-minimum-input {
+    align-self: center;
+    margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+    .requirement-score-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .admin-dashboard {
     padding-bottom: 32px;
 }

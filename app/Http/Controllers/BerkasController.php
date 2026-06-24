@@ -25,33 +25,26 @@ class BerkasController extends Controller
 
     public function hasil(Request $request)
     {
-        $prodi = $request->prodi_id;
-        $l1_id = $request->l1_id;
-        $l2_id = $request->l2_id;
-        $l3_id = $request->l3_id;
-        $l4_id = $request->l4_id;
+        $request->validate([
+            'jenjang_id' => 'required|exists:jenjangs,id',
+            'prodi_id' => 'required|exists:prodis,id',
+            'l1_id' => 'nullable|array',
+            'l2_id' => 'nullable|array',
+            'l3_id' => 'nullable|array',
+            'l4_id' => 'nullable|array',
+        ]);
 
-        if ($prodi) {
-            $b = Berkas::where('prodi_id', $prodi)->get();
+        $query = Berkas::where('prodi_id', $request->prodi_id);
+
+        foreach (['l1_id', 'l2_id', 'l3_id', 'l4_id'] as $field) {
+            $values = array_filter($request->input($field, []));
+
+            if (!empty($values)) {
+                $query->whereIn($field, $values);
+            }
         }
 
-        if (isset($_POST['l1_id'])) {
-            $b = Berkas::where('prodi_id', $prodi)->whereIn('l1_id', $l1_id)->get();
-        }
-
-        if (isset($_POST['l2_id'])) {
-            $b = Berkas::where('prodi_id', $prodi)->whereIn('l1_id', $l1_id)->whereIn('l2_id', $l2_id)->get();
-        }
-
-        if (isset($_POST['l3_id'])) {
-            $b = Berkas::where('prodi_id', $prodi)->whereIn('l1_id', $l1_id)->whereIn('l2_id', $l2_id)->whereIn('l3_id', $l3_id)->get();
-
-        }
-
-        if (isset($_POST['l4_id'])) {
-            $b = Berkas::where('prodi_id', $prodi)->whereIn('l1_id', $l1_id)->whereIn('l2_id', $l2_id)->whereIn('l3_id', $l3_id)->whereIn('l4_id', $l4_id)->get();
-
-        }
+        $b = $query->get();
 
         return view('berkas.index', [
             'berkas' => $b,
