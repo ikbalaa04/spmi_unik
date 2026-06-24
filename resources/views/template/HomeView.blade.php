@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Smart Sistem Penjamin Mutu Internal - {{ $title ?? 'Home' }}</title>
+    <title>{{ $siteSettings['system_name'] }} - {{ $title ?? 'Home' }}</title>
     <meta name="author" content="Ricky Martin Ginting">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -55,9 +55,11 @@
     <header id="header" class="d-flex align-items-center">
         <div class="container d-flex align-items-center">
 
-            <h1 class="logo me-auto"><a href="{{ route('home') }}">LPM Smart Sistem</a></h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html" class="logo me-auto"><img src="img/logo.png" alt="" class="img-fluid"></a>-->
+            <a href="{{ route('home') }}" class="logo me-auto d-flex align-items-center">
+                <img src="{{ asset($siteSettings['logo_path']) }}" alt="Logo {{ $siteSettings['campus_name'] }}"
+                    class="img-fluid me-2">
+                <span>{{ $siteSettings['system_name'] }}</span>
+            </a>
 
             <nav id="navbar" class="navbar">
                 <ul>
@@ -101,7 +103,8 @@
     <footer id="footer">
         <div class="container">
             <div class="copyright">
-                &copy; Copyright <strong><span>LPM SMART SISTEM</span></strong>. All Rights Reserved
+                &copy; Copyright <strong><span>{{ $siteSettings['system_name'] }}</span></strong>.
+                {{ $siteSettings['campus_name'] }}
             </div>
             <div class="credits">
                 Created by <a href="https://rickyginting.github.io/">RMG</a>

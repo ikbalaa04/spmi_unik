@@ -163,6 +163,11 @@ Route::middleware(['auth', 'cekRole:Admin,Ketua LPM,Ketua Program Studi,Dosen,UP
     Route::delete('program-studi/hapus/{prodi}', 'PengaturanController@prodiDelete');
     Route::put('program-studi/put/{prodi}', 'PengaturanController@prodiPut');
 
+    Route::middleware('cekRole:Admin')->group(function () {
+        Route::get('pengaturan/identitas-situs', 'SiteSettingController@edit')->name('site-settings.edit');
+        Route::put('pengaturan/identitas-situs', 'SiteSettingController@update')->name('site-settings.update');
+    });
+
 //DATA USER
     Route::get('users', 'AdminController@index')->name('users');
     Route::get('users/tambah/admin', 'AdminController@tambahAdmin')->name('tambah-admin');

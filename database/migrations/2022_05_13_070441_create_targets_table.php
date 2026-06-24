@@ -13,9 +13,15 @@ class CreateTargetsTable extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('targets')) {
+            return;
+        }
+
         Schema::create('targets', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('l1_id')->nullable();
+            $table->unsignedBigInteger('prodi_id')->nullable();
+            $table->decimal('value', 6, 2)->nullable();
         });
     }
 

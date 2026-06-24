@@ -3,9 +3,9 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
         <div class="sidebar-brand-icon">
-            <i class="fas fa-book-open"></i>
+            <img src="{{ asset($siteSettings['logo_path']) }}" alt="" style="width: 36px; height: 36px; object-fit: contain;">
         </div>
-        <div class="sidebar-brand-text mx-3">LPM Smart Sistem</div>
+        <div class="sidebar-brand-text mx-3">{{ $siteSettings['system_name'] }}</div>
     </a>
 
     <!-- Divider -->
@@ -124,6 +124,7 @@
         </a>
         <div id="pengaturan" class="collapse" aria-labelledby="heading2" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('site-settings.edit') }}">Identitas Situs</a>
                 <a class="collapse-item" href="{{ route('jenjang') }}">Jenjang Pendidikan</a>
                 <a class="collapse-item" href="{{ route('prodi') }}">Program Studi</a>
                 <a class="collapse-item" href="{{ route('target') }}">Target Pencapaian</a>

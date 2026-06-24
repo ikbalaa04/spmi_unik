@@ -143,8 +143,28 @@ h6 {
     color: #5cb874;
 }
 
+#header a.logo {
+    color: #5cb874;
+    text-decoration: none;
+}
+
+#header .logo span {
+    display: inline-block;
+    max-width: 360px;
+    line-height: 1.15;
+}
+
 #header .logo img {
     max-height: 40px;
+    max-width: 64px;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    #header .logo span {
+        max-width: 190px;
+        font-size: 18px;
+    }
 }
 
 .scrolled-offset {
