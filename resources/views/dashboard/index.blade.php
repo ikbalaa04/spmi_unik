@@ -1,5 +1,25 @@
 @extends('template.BaseView')
 @section('content')
+  <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ $siteSettings['system_name'] }}</h4>
+                    <p class="card-text">Selamat datang <b>{{ Auth::user()->name }}</b><br>
+                        @if (Auth::user()->prodi_kode == '-')
+                            Kamu dapat melakukan pemberkasan dengan lebih mudah dan untuk saat ini terdapat
+                            <b>{{ $p->count() }}</b> Perogram Studi yang terdaftar pada sistem.
+                        @else
+                            Saat ini kamu bertugas sebagai {{ Auth::user()->role }} pada Program Studi
+                            {{ Auth::user()->prodi_name }}, kamu dapat melakukan peningkatan dan pemberkasan melalui menu
+                            Element dan Berkas
+                        @endif
+                    </p>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
     @if (Auth::user()->prodi_kode == '-')
         <div class="row">
             @foreach ($p as $i)
@@ -26,24 +46,4 @@
             @endforeach
         </div>
     @endif
-    <div class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">LPM Smart Sistem</h4>
-                    <p class="card-text">Selamat datang <b>{{ Auth::user()->name }}</b><br>
-                        @if (Auth::user()->prodi_kode == '-')
-                            Kamu dapat melakukan pemberkasan dengan lebih mudah dan untuk saat ini terdapat
-                            <b>{{ $p->count() }}</b> Perogram Studi yang terdaftar pada sistem.
-                        @else
-                            Saat ini kamu bertugas sebagai {{ Auth::user()->role }} pada Program Studi
-                            {{ Auth::user()->prodi_name }}, kamu dapat melakukan peningkatan dan pemberkasan melalui menu
-                            Element dan Berkas
-                        @endif
-                    </p>
-                    <hr>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

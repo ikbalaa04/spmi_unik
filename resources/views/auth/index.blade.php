@@ -12,7 +12,7 @@
                         <div class="col-lg">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">LPM Smart Sistem</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">{{ $siteSettings['system_name'] }}</h1>
                                 </div>
                                 @if (session()->has('pesan'))
                                     {!! session()->get('pesan') !!}

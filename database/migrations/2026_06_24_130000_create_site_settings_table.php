@@ -19,7 +19,7 @@ class CreateSiteSettingsTable extends Migration
 
         Schema::create('site_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('system_name')->default('LPM Smart Sistem');
+            $table->string('system_name')->default('Sistem Penjaminan Mutu Internal');
             $table->string('campus_name')->default('Nama Perguruan Tinggi');
             $table->string('logo_path')->nullable();
             $table->string('admin_logo_path')->nullable();

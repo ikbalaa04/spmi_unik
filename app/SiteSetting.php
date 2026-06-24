@@ -39,7 +39,7 @@ class SiteSetting extends Model
     public static function defaults()
     {
         return [
-            'system_name' => 'LPM Smart Sistem',
+            'system_name' => 'Sistem Penjaminan Mutu Internal',
             'campus_name' => 'Nama Perguruan Tinggi',
             'logo_path' => 'home/img/favicon.png',
             'admin_logo_path' => 'home/img/favicon.png',
@@ -47,7 +47,7 @@ class SiteSetting extends Model
             'banner_2_path' => 'home/img/slide/slide-2.jpg',
             'banner_3_path' => 'home/img/slide/slide-3.jpg',
             'about_image_path' => 'home/img/about.png',
-            'hero_1_title' => 'LPM Smart Sistem',
+            'hero_1_title' => 'Sistem Penjaminan Mutu Internal',
             'hero_1_description' => 'Aplikasi berbasis web untuk pengelolaan dokumen akreditasi perguruan tinggi.',
             'hero_2_title' => 'Multiple Search',
             'hero_2_description' => 'Temukan dokumen secara cepat hingga ke subfolder berkas.',
