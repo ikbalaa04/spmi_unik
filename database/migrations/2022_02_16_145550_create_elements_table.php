@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
 class CreateElementsTable extends Migration
 {
     /**
@@ -13,10 +10,8 @@ class CreateElementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('elements', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        // The elements table is already created by
+        // 2022_01_18_081208_element.php.
     }
 
     /**
@@ -26,6 +21,6 @@ class CreateElementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('elements');
+        // Do not drop a table owned by an earlier migration.
     }
 }

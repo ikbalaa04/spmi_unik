@@ -41,8 +41,15 @@ Route::get('diagram/{prodi:kode}', 'HomeController@radarDiagram');
 
 Route::middleware(['auth', 'cekRole:Admin,Ketua LPM,Ketua Program Studi,Dosen,UPPS,Mahasiswa,Alumni'])->group(function () {
 //GET PRODI AND JENJANG
-    $j = Jenjang::get();
-    $p = Prodi::get();
+    $j = collect();
+    $p = collect();
+
+    // Dynamic routes require database records, but Artisan commands must be
+    // able to bootstrap before the database server is available.
+    if (!defined('ARTISAN_BINARY')) {
+        $j = Jenjang::get();
+        $p = Prodi::get();
+    }
 
 //DASHBOARD
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
