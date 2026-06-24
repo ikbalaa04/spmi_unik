@@ -155,12 +155,21 @@ h6 {
 }
 
 #header .logo img {
-    max-height: 40px;
-    max-width: 64px;
+    height: 54px;
+    max-height: 54px;
+    max-width: 300px;
+    width: auto;
     object-fit: contain;
+    object-position: left center;
 }
 
 @media (max-width: 768px) {
+    #header .logo img {
+        height: 42px;
+        max-height: 42px;
+        max-width: 190px;
+    }
+
     #header .logo span {
         max-width: 190px;
         font-size: 18px;
@@ -301,6 +310,289 @@ h6 {
     color: #6c757d;
     padding: 24px;
     text-align: center;
+}
+
+.document-search-section {
+    background:
+        radial-gradient(circle at top right, rgba(92, 184, 116, 0.1), transparent 34%),
+        #f7faf8;
+    min-height: calc(100vh - 190px);
+    padding: 68px 0 84px;
+}
+
+.document-search-intro {
+    margin: 0 auto 34px;
+    max-width: 760px;
+    text-align: center;
+}
+
+.document-search-eyebrow {
+    color: #5cb874;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    margin-bottom: 9px;
+    text-transform: uppercase;
+}
+
+.document-search-intro h2 {
+    color: #174d72;
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.document-search-intro p {
+    color: #6f7d85;
+    font-size: 16px;
+    margin: 0;
+}
+
+.document-search-card {
+    background: #fff;
+    border: 1px solid #e3ece7;
+    border-radius: 18px;
+    box-shadow: 0 18px 55px rgba(23, 77, 114, 0.1);
+    margin: 0 auto;
+    max-width: 1120px;
+    overflow: hidden;
+}
+
+.document-search-card-header {
+    align-items: center;
+    background: linear-gradient(135deg, #174d72, #216b63);
+    color: #fff;
+    display: flex;
+    gap: 18px;
+    padding: 26px 30px;
+}
+
+.document-search-header-icon {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+    display: flex;
+    flex: 0 0 58px;
+    font-size: 27px;
+    height: 58px;
+    justify-content: center;
+}
+
+.document-search-card-header h3 {
+    color: #fff;
+    font-size: 23px;
+    font-weight: 700;
+    margin: 0 0 4px;
+}
+
+.document-search-card-header p {
+    color: rgba(255, 255, 255, 0.78);
+    margin: 0;
+}
+
+.document-search-form {
+    padding: 8px 30px 30px;
+}
+
+.document-search-step {
+    border-bottom: 1px solid #edf1ef;
+    display: flex;
+    gap: 20px;
+    padding: 28px 0;
+}
+
+.document-search-step-number {
+    align-items: center;
+    background: #eaf7ee;
+    border-radius: 50%;
+    color: #42a663;
+    display: flex;
+    flex: 0 0 38px;
+    font-size: 15px;
+    font-weight: 700;
+    height: 38px;
+    justify-content: center;
+}
+
+.document-search-step-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.document-search-step-content > h4 {
+    color: #174d72;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 2px 0 4px;
+}
+
+.document-search-step-content > p {
+    color: #7c898f;
+    font-size: 14px;
+    margin: 0 0 20px;
+}
+
+.document-field {
+    margin-bottom: 20px;
+}
+
+.document-field label {
+    align-items: center;
+    color: #34454f;
+    display: flex;
+    font-size: 13px;
+    font-weight: 700;
+    gap: 7px;
+    margin-bottom: 8px;
+}
+
+.document-field label i {
+    color: #5cb874;
+    font-size: 16px;
+}
+
+.document-field label span {
+    background: #edf8f1;
+    border-radius: 20px;
+    color: #469c5d;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    margin-left: auto;
+    padding: 3px 8px;
+    text-transform: uppercase;
+}
+
+.document-field small {
+    color: #929da3;
+    display: block;
+    font-size: 11px;
+    line-height: 1.4;
+    margin-top: 7px;
+}
+
+.document-search-card .select2-container .select2-selection--single,
+.document-search-card .select2-container .select2-selection--multiple {
+    border: 1px solid #dce6e1;
+    border-radius: 9px;
+    min-height: 46px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.document-search-card .select2-container .select2-selection--single {
+    padding: 8px 11px;
+}
+
+.document-search-card .select2-container .select2-selection--single .select2-selection__rendered {
+    color: #33454f;
+    line-height: 28px;
+    padding-left: 0;
+}
+
+.document-search-card .select2-container .select2-selection--single .select2-selection__arrow {
+    height: 44px;
+    right: 8px;
+}
+
+.document-search-card .select2-container .select2-selection--multiple {
+    padding: 4px 7px;
+}
+
+.document-search-card .select2-container--focus .select2-selection,
+.document-search-card .select2-container--open .select2-selection {
+    border-color: #5cb874;
+    box-shadow: 0 0 0 3px rgba(92, 184, 116, 0.12);
+}
+
+.document-search-card .select2-container--disabled .select2-selection {
+    background: #f4f6f5;
+    color: #a5aeb2;
+}
+
+.document-search-card .select2-selection__choice {
+    background: #eaf7ee !important;
+    border: 0 !important;
+    border-radius: 6px !important;
+    color: #397f4c;
+    padding: 4px 7px !important;
+}
+
+.document-search-actions {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    padding-top: 26px;
+}
+
+.document-search-reset,
+.document-search-submit {
+    align-items: center;
+    border-radius: 9px;
+    display: inline-flex;
+    font-size: 14px;
+    font-weight: 700;
+    gap: 8px;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 20px;
+    transition: all 0.2s ease;
+}
+
+.document-search-reset {
+    background: #fff;
+    border: 1px solid #dbe4e0;
+    color: #66757c;
+}
+
+.document-search-reset:hover {
+    background: #f5f8f6;
+    color: #34454f;
+}
+
+.document-search-submit {
+    background: #5cb874;
+    border: 1px solid #5cb874;
+    box-shadow: 0 7px 18px rgba(92, 184, 116, 0.22);
+    color: #fff;
+}
+
+.document-search-submit:hover {
+    background: #4da966;
+    border-color: #4da966;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 767px) {
+    .document-search-section {
+        padding: 42px 0 60px;
+    }
+
+    .document-search-intro h2 {
+        font-size: 27px;
+    }
+
+    .document-search-card-header,
+    .document-search-form {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .document-search-step {
+        gap: 12px;
+    }
+
+    .document-search-step-number {
+        flex-basis: 32px;
+        height: 32px;
+    }
+
+    .document-search-actions {
+        align-items: stretch;
+        flex-direction: column-reverse;
+    }
 }
 
 @media (max-width: 575px) {

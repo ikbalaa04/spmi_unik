@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>LPM Smart Sistem - Login</title>
+    <title>Sistem Penjamin Mutu Internal - Login</title>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-icon-57x57.png') }}">
