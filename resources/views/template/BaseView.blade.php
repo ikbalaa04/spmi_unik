@@ -191,6 +191,7 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('portal/js/demo/datatables-demo.js') }}"></script>
+    <script src="{{ asset('portal/js/spmi-admin.js') }}?v={{ filemtime(public_path('portal/js/spmi-admin.js')) }}"></script>
 
     @yield('script')
 

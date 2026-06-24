@@ -1,49 +1,85 @@
-@extends('template.BaseView')
+@extends('template.BaseView', ['title' => 'Dashboard'])
+
 @section('content')
-  <div class="row">
-        <div class="col mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">{{ $siteSettings['system_name'] }}</h4>
-                    <p class="card-text">Selamat datang <b>{{ Auth::user()->name }}</b><br>
-                        @if (Auth::user()->prodi_kode == '-')
-                            Kamu dapat melakukan pemberkasan dengan lebih mudah dan untuk saat ini terdapat
-                            <b>{{ $p->count() }}</b> Perogram Studi yang terdaftar pada sistem.
-                        @else
-                            Saat ini kamu bertugas sebagai {{ Auth::user()->role }} pada Program Studi
-                            {{ Auth::user()->prodi_name }}, kamu dapat melakukan peningkatan dan pemberkasan melalui menu
-                            Element dan Berkas
-                        @endif
+    <section class="admin-dashboard">
+        <div class="dashboard-welcome">
+            <div class="dashboard-welcome-content">
+                <span class="dashboard-eyebrow">Dashboard Mutu</span>
+                <h1>
+                    Selamat datang,
+                    <strong>{{ Auth::user()->name }}</strong>
+                </h1>
+
+                @if (Auth::user()->prodi_kode == '-')
+                    <p>
+                        Kelola penilaian, dokumen, dan pencapaian mutu
+                        <strong>{{ $p->count() }} program studi</strong> yang terdaftar pada sistem.
                     </p>
-                    <hr>
+                @else
+                    <p>
+                        Anda bertugas sebagai <strong>{{ Auth::user()->role }}</strong> pada Program Studi
+                        <strong>{{ Auth::user()->prodi_name }}</strong>. Kelola peningkatan mutu melalui menu
+                        Elemen &amp; Berkas.
+                    </p>
+                @endif
+            </div>
+
+            <div class="dashboard-welcome-visual">
+                <div class="dashboard-welcome-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div>
+                    <strong>{{ $siteSettings['system_name'] ?: 'Sistem Penjaminan Mutu' }}</strong>
+                    <span>{{ $siteSettings['campus_name'] }}</span>
                 </div>
             </div>
         </div>
-    </div>
-    @if (Auth::user()->prodi_kode == '-')
-        <div class="row">
-            @foreach ($p as $i)
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-info shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col-auto">
-                                            <a href="{{ url('prodi/' . $i->kode) }}"
-                                                class="h7 mb-0 mr-3 font-weight-bold text-info text-uppercase">
-                                                {{ $i->name }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+        @if (Auth::user()->prodi_kode == '-')
+            <div class="dashboard-section-heading">
+                <div>
+                    <span>Program Pendidikan</span>
+                    <h2>Program Studi Terdaftar</h2>
+                    <p>Pilih program studi untuk membuka penilaian, diagram, dan informasi asesmen.</p>
                 </div>
-            @endforeach
-        </div>
-    @endif
+                <div class="dashboard-count">
+                    <strong>{{ $p->count() }}</strong>
+                    <span>Program Studi</span>
+                </div>
+            </div>
+
+            <div class="dashboard-program-grid">
+                @forelse ($p as $i)
+                    <a href="{{ url('prodi/' . $i->kode) }}" class="dashboard-program-card">
+                        <div class="dashboard-program-icon">
+                            <i class="{{ $loop->even ? 'fas fa-university' : 'fas fa-graduation-cap' }}"></i>
+                        </div>
+                        <div class="dashboard-program-content">
+                            <span class="dashboard-program-code">{{ $i->kode }}</span>
+                            <h3>{{ $i->name }}</h3>
+                            <p>{{ $i->jenjang ? $i->jenjang->name . ' (' . $i->jenjang->kode . ')' : 'Program Studi' }}</p>
+                        </div>
+                        <i class="fas fa-arrow-right dashboard-program-arrow"></i>
+                    </a>
+                @empty
+                    <div class="dashboard-empty">
+                        <i class="fas fa-university"></i>
+                        <h3>Belum ada program studi</h3>
+                        <p>Tambahkan program studi melalui menu Pengaturan.</p>
+                    </div>
+                @endforelse
+            </div>
+        @else
+            <div class="dashboard-role-card">
+                <div class="dashboard-program-icon">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div>
+                    <span>Program Studi Anda</span>
+                    <h2>{{ Auth::user()->prodi_name }}</h2>
+                    <p>Gunakan navigasi di samping untuk mengelola data penjaminan mutu.</p>
+                </div>
+            </div>
+        @endif
+    </section>
 @endsection

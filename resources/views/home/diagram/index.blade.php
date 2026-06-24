@@ -69,7 +69,8 @@
     @if ($programs->isNotEmpty())
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
         <script>
-            const labels = @json($programs->pluck('name')->values());
+            const labels = @json($programs->pluck('kode')->values());
+            const programNames = @json($programs->pluck('name')->values());
             const scores = @json($programs->pluck('score')->map(function ($score) {
                 return (float) $score;
             })->values());
@@ -124,6 +125,10 @@
                         },
                         tooltip: {
                             callbacks: {
+                                title: function(context) {
+                                    const index = context[0].dataIndex;
+                                    return programNames[index] + ' (' + labels[index] + ')';
+                                },
                                 afterLabel: function(context) {
                                     return 'Klik untuk melihat detail';
                                 }

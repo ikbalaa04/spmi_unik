@@ -9,7 +9,7 @@ class DashboardController extends Controller
     public function index()
     {
         return view('dashboard.index', [
-            'p' => Prodi::get(),
+            'p' => Prodi::with('jenjang')->whereNotIn('id', [0])->orderBy('name')->get(),
         ]);
     }
 }
