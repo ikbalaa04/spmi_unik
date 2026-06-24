@@ -95,16 +95,21 @@ class HomeController extends Controller
 
     public function diagram()
     {
-        $ass = [
-            'TI' => Element::where('prodi_id', 1)->get()->sum('score_hitung'),
-            'RPL' => Element::where('prodi_id', 2)->get()->sum('score_hitung'),
-            'TIF' => Element::where('prodi_id', 3)->get()->sum('score_hitung'),
-            'BD' => Element::where('prodi_id', 4)->get()->sum('score_hitung'),
-            'TRKJ' => Element::where('prodi_id', 5)->get()->sum('score_hitung'),
-            'MI' => Element::where('prodi_id', 6)->get()->sum('score_hitung'),
-        ];
+        $programs = Prodi::query()
+            ->leftJoin('elements', 'elements.prodi_id', '=', 'prodis.id')
+            ->select(
+                'prodis.id',
+                'prodis.name',
+                'prodis.kode'
+            )
+            ->selectRaw('COALESCE(SUM(elements.score_hitung), 0) as score')
+            ->selectRaw('COUNT(elements.id) as element_count')
+            ->groupBy('prodis.id', 'prodis.name', 'prodis.kode')
+            ->orderBy('prodis.name')
+            ->get();
+
         return view('home.diagram.index', [
-            'ass' => $ass,
+            'programs' => $programs,
         ]);
     }
 

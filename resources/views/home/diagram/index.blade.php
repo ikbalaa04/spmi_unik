@@ -1,115 +1,158 @@
-@extends('template.HomeView',['title'=>"Diagram Pencapaian"])
+@extends('template.HomeView', ['title' => 'Diagram Pencapaian'])
+
 @section('content')
-
-
     <main id="main">
-
-
-        <!-- ======= About Us Section ======= -->
-        <section>
+        <section class="achievement-section">
             <div class="container">
-
-                <div class="section-title">
-                    <h2>Diagram Pencapaian</h2>
-                    <p>Berikut ini adalah diagram pencapaian nilai asessmen setiap Program Studi di STMIK Pelita Nusantara
+                <div class="achievement-heading">
+                    <span>Ringkasan Mutu</span>
+                    <h2>Diagram Pencapaian Program Studi</h2>
+                    <p>
+                        Perbandingan nilai asesmen seluruh program studi di
+                        {{ $siteSettings['campus_name'] }}.
                     </p>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <div class="card">
-                            <canvas id="barChart" width="300" height="300"></canvas>
+                <div class="achievement-summary">
+                    <div class="achievement-summary-item">
+                        <i class="bi bi-building"></i>
+                        <div>
+                            <strong>{{ $programs->count() }}</strong>
+                            <span>Program Studi</span>
+                        </div>
+                    </div>
+                    <div class="achievement-summary-item">
+                        <i class="bi bi-ui-checks-grid"></i>
+                        <div>
+                            <strong>{{ $programs->sum('element_count') }}</strong>
+                            <span>Total Elemen</span>
+                        </div>
+                    </div>
+                    <div class="achievement-summary-item">
+                        <i class="bi bi-graph-up-arrow"></i>
+                        <div>
+                            <strong>{{ number_format($programs->sum('score'), 2) }}</strong>
+                            <span>Total Pencapaian</span>
                         </div>
                     </div>
                 </div>
 
+                <div class="achievement-card">
+                    <div class="achievement-card-header">
+                        <div>
+                            <h3>Nilai Asesmen Tercapai</h3>
+                            <p>Klik batang diagram untuk membuka detail program studi.</p>
+                        </div>
+                        <span class="achievement-live-badge">
+                            <i class="bi bi-database-check"></i> Data Dinamis
+                        </span>
+                    </div>
+
+                    @if ($programs->isEmpty())
+                        <div class="achievement-empty">
+                            <i class="bi bi-bar-chart"></i>
+                            <h4>Belum ada data program studi</h4>
+                            <p>Diagram akan tampil setelah program studi dan elemen asesmen tersedia.</p>
+                        </div>
+                    @else
+                        <div class="achievement-chart-wrap">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    @endif
+                </div>
             </div>
         </section>
-        <!-- End About Us Section -->
-
-
     </main>
-    <!-- End #main -->
 @endsection
+
 @section('script')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <script>
-        const diagram = {
-            type: 'bar',
-            data: {
-                labels: ['Teknik Informatika', 'Rekayasa Perangkat Lunak', 'Teknologi Informasi', 'Bisnis Digital',
-                    'Rekayasa Komputer Jaringan', 'Manajement Informasi'
-                ],
-                labelsLink: ['http://localhost:8000/diagram/TI',
-                    'http://localhost:8000/diagram/RPL', 'http://localhost:8000/diagram/TIF',
-                    'http://localhost:8000/diagram/BD', 'http://localhost:8000/diagram/TRKJ',
-                    'http://localhost:8000/diagram/MI'
-                ],
-                datasets: [{
-                    label: 'Nilai Assesmen Tercapai',
-                    data: [<?= $ass['TI'] ?>, <?= $ass['RPL'] ?>, <?= $ass['TIF'] ?>, <?= $ass['BD'] ?>,
-                        <?= $ass['TRKJ'] ?>, <?= $ass['MI'] ?>
-                    ],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(201, 203, 207, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
-                        'rgb(54, 162, 235)',
-                        'rgb(153, 102, 255)',
-                        'rgb(201, 203, 207)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-            }
+    @if ($programs->isNotEmpty())
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+        <script>
+            const labels = @json($programs->pluck('name')->values());
+            const scores = @json($programs->pluck('score')->map(function ($score) {
+                return (float) $score;
+            })->values());
+            const links = @json($programs->map(function ($program) {
+                return url('diagram/' . $program->kode);
+            })->values());
+            const palette = [
+                ['rgba(92, 184, 116, .68)', '#5cb874'],
+                ['rgba(23, 77, 114, .68)', '#174d72'],
+                ['rgba(61, 164, 171, .68)', '#3da4ab'],
+                ['rgba(246, 177, 63, .68)', '#f6b13f'],
+                ['rgba(120, 102, 190, .68)', '#7866be'],
+                ['rgba(225, 111, 121, .68)', '#e16f79']
+            ];
 
-        }
-        const ctx = document.getElementById('barChart');
-        const myChart = new Chart(ctx, diagram);
+            const backgroundColors = labels.map((label, index) => palette[index % palette.length][0]);
+            const borderColors = labels.map((label, index) => palette[index % palette.length][1]);
+            const canvas = document.getElementById('barChart');
 
-        function clickableScale(canvas, click) {
-
-            const height = myChart.scales.x.height
-            const top = myChart.scales.x.top
-            const bottom = myChart.scales.x.bottom
-            const left = myChart.scales.x.left
-            const right = myChart.scales.x.maxWidth / myChart.scales.x.ticks.length
-            const DIFF = right + left
-
-            // console.log(right);
-            let resetCoordinates = canvas.getBoundingClientRect()
-
-            const x = click.clientX - resetCoordinates.left;
-            const y = click.clientY - resetCoordinates.top;
-            // console.log(x);
-
-
-            for (let i = 0; i < myChart.scales.x.ticks.length; i++) {
-
-                if (x >= left + (right * i) && x <= DIFF + (right * i) && y >= top && y <= bottom) {
-                    // console.log(i);
-                    window.open(myChart.config.data.labelsLink[i])
+            new Chart(canvas, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Nilai Asesmen',
+                        data: scores,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 1.5,
+                        borderRadius: 9,
+                        maxBarThickness: 72
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    onHover: function(event, elements) {
+                        event.native.target.style.cursor = elements.length ? 'pointer' : 'default';
+                    },
+                    onClick: function(event, elements) {
+                        if (elements.length) {
+                            window.location.href = links[elements[0].index];
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    return 'Klik untuk melihat detail';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#66757c',
+                                maxRotation: 35,
+                                minRotation: 0
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(23, 77, 114, .08)'
+                            },
+                            ticks: {
+                                color: '#7b898f'
+                            }
+                        }
+                    }
                 }
-            }
-        }
-
-        ctx.addEventListener('click', (e) => {
-            clickableScale(ctx, e)
-            myChart.resize();
-            myChart.update();
-        })
-    </script>
-
+            });
+        </script>
+    @endif
 @endsection

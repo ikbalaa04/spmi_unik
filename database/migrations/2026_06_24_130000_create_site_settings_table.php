@@ -22,6 +22,7 @@ class CreateSiteSettingsTable extends Migration
             $table->string('system_name')->default('LPM Smart Sistem');
             $table->string('campus_name')->default('Nama Perguruan Tinggi');
             $table->string('logo_path')->nullable();
+            $table->string('admin_logo_path')->nullable();
             $table->string('banner_1_path')->nullable();
             $table->string('banner_2_path')->nullable();
             $table->string('banner_3_path')->nullable();

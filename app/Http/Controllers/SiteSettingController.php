@@ -48,6 +48,7 @@ class SiteSettingController extends Controller
             'about_title' => 'required|string|max:200',
             'about_description' => 'required|string|max:1500',
             'logo' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:4096',
+            'admin_logo' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:4096',
             'banner_1' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:6144',
             'banner_2' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:6144',
             'banner_3' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:6144',
@@ -56,6 +57,7 @@ class SiteSettingController extends Controller
 
         $files = [
             'logo' => 'logo_path',
+            'admin_logo' => 'admin_logo_path',
             'banner_1' => 'banner_1_path',
             'banner_2' => 'banner_2_path',
             'banner_3' => 'banner_3_path',

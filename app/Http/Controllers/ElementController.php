@@ -33,73 +33,39 @@ class ElementController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'prodi_id' => 'required|exists:prodis,id',
+            'l1_id' => 'required|array|min:1',
+            'l1_id.*' => 'required|integer|exists:l1_s,id',
+            'l2_id' => 'nullable|array',
+            'l3_id' => 'nullable|array',
+            'l4_id' => 'nullable|array',
+            'bobot' => 'required|numeric|min:0',
+            'ind_id' => 'required|exists:indikators,id',
+        ]);
 
-        $prodi = Prodi::where('id', $request->prodi_id)->first();
+        $prodi = Prodi::findOrFail($request->prodi_id);
         $row = [];
 
-        if ($request->l1_id & $request->l2_id == null & $request->l3_id == null & $request->l4_id == null) {
-            for ($i = 0; $i < count($request->l1_id); $i++) {
-                $row[] = [
-                    'prodi_id' => $request->prodi_id,
-                    'l1_id' => $request->l1_id[$i],
-                    'l2_id' => 0,
-                    'l3_id' => 0,
-                    'l4_id' => 0,
-                    'bobot' => floatval($request->bobot),
-                    'score_berkas' => 0,
-                    'score_hitung' => 0,
-                    'count_berkas' => 0,
-                    'indikator_id' => $request->ind_id,
-                ];
-            }
-        } elseif ($request->l1_id & $request->l2_id & $request->l3_id == null & $request->l4_id == null) {
-            for ($i = 0; $i < count($request->l1_id); $i++) {
-                $row[] = [
-                    'prodi_id' => $request->prodi_id,
-                    'l1_id' => $request->l1_id[$i],
-                    'l2_id' => $request->l2_id[$i],
-                    'l3_id' => 0,
-                    'l4_id' => 0,
-                    'bobot' => floatval($request->bobot),
-                    'score_berkas' => 0,
-                    'score_hitung' => 0,
-                    'count_berkas' => 0,
-                    'indikator_id' => $request->ind_id,
-                ];
-            }
-        } elseif ($request->l1_id & $request->l2_id & $request->l3_id & $request->l4_id == null) {
-            for ($i = 0; $i < count($request->l1_id); $i++) {
-                $row[] = [
-                    'prodi_id' => $request->prodi_id,
-                    'l1_id' => $request->l1_id[$i],
-                    'l2_id' => $request->l2_id[$i],
-                    'l3_id' => $request->l3_id[$i],
-                    'l4_id' => 0,
-                    'bobot' => floatval($request->bobot),
-                    'score_berkas' => 0,
-                    'score_hitung' => 0,
-                    'count_berkas' => 0,
-                    'indikator_id' => $request->ind_id,
-                ];
-            }
-        } elseif ($request->l1_id & $request->l2_id & $request->l3_id & $request->l4_id) {
-            for ($i = 0; $i < count($request->l1_id); $i++) {
-                $row[] = [
-                    'prodi_id' => $request->prodi_id,
-                    'l1_id' => $request->l1_id[$i],
-                    'l2_id' => $request->l2_id[$i],
-                    'l3_id' => $request->l3_id[$i],
-                    'l4_id' => $request->l4_id[$i],
-                    'bobot' => floatval($request->bobot),
-                    'score_berkas' => 0,
-                    'score_hitung' => 0,
-                    'count_berkas' => 0,
-                    'indikator_id' => $request->ind_id,
-                ];
-            }
-        } else {
-            echo "Ada Kesalahan pada Sistem";
-            die;
+        $l1 = array_values($request->input('l1_id', []));
+        $l2 = array_values($request->input('l2_id', []));
+        $l3 = array_values($request->input('l3_id', []));
+        $l4 = array_values($request->input('l4_id', []));
+        $count = max(count($l1), count($l2), count($l3), count($l4));
+
+        for ($i = 0; $i < $count; $i++) {
+            $row[] = [
+                'prodi_id' => $prodi->id,
+                'l1_id' => isset($l1[$i]) ? $l1[$i] : ($l1[0] ?? 0),
+                'l2_id' => isset($l2[$i]) ? $l2[$i] : 0,
+                'l3_id' => isset($l3[$i]) ? $l3[$i] : 0,
+                'l4_id' => isset($l4[$i]) ? $l4[$i] : 0,
+                'bobot' => (float) $request->bobot,
+                'score_berkas' => 0,
+                'score_hitung' => 0,
+                'count_berkas' => 0,
+                'indikator_id' => $request->ind_id,
+            ];
         }
 
         Element::insert($row);

@@ -37,6 +37,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('portal/css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ asset('portal/css/spmi-admin.css') }}?v={{ filemtime(public_path('portal/css/spmi-admin.css')) }}"
+        rel="stylesheet">
     <!-- Custom styles for this page -->
     <link href="{{ asset('portal/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -44,7 +46,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" class="{{ Auth::user()->role == 'Admin' ? 'admin-sidebar-locked' : '' }}">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -76,9 +78,11 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                    @if (Auth::user()->role != 'Admin')
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    @endif
 
 
                     <!-- Topbar Navbar -->

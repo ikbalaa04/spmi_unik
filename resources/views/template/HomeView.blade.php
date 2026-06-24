@@ -79,7 +79,7 @@
                             <li><a href="{{ route('singleSearch') }}">Single Search</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span>Berkas</span> <i class="bi bi-chevron-down"></i></a>
+                    <li class="dropdown"><a href="#"><span>Dokumen SPMI</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
                             @foreach ($data['p'] as $pr)
                                 <li><a href="{{ url('tabel/' . $pr->kode) }}">{{ $pr->name }}</a></li>

@@ -49,16 +49,33 @@
                     </div>
                 </div>
 
-                <div class="form-group mb-0">
-                    <label>Logo</label>
-                    <div class="d-flex align-items-center">
-                        <img src="{{ \App\SiteSetting::imageUrl($settings, 'logo_path') }}"
-                            onerror="this.onerror=null;this.src='{{ asset('home/img/favicon.png') }}';" alt=""
-                            class="mr-3 border rounded p-2"
-                            style="width: 90px; height: 90px; object-fit: contain;">
-                        <div class="flex-grow-1">
-                            <input type="file" name="logo" class="form-control-file" accept=".jpg,.jpeg,.png,.webp">
-                            <small class="text-muted">PNG/WebP transparan disarankan. Maksimal 4 MB.</small>
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-md-0">
+                        <label>Logo Halaman Publik</label>
+                        <div class="d-flex align-items-center">
+                            <img src="{{ \App\SiteSetting::imageUrl($settings, 'logo_path') }}"
+                                onerror="this.onerror=null;this.src='{{ asset('home/img/favicon.png') }}';" alt=""
+                                class="mr-3 border rounded p-2"
+                                style="width: 90px; height: 90px; object-fit: contain;">
+                            <div class="flex-grow-1">
+                                <input type="file" name="logo" class="form-control-file"
+                                    accept=".jpg,.jpeg,.png,.webp">
+                                <small class="text-muted">Ditampilkan pada header website publik.</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                        <label>Logo Sidebar Admin</label>
+                        <div class="d-flex align-items-center">
+                            <img src="{{ \App\SiteSetting::imageUrl($settings, 'admin_logo_path') }}"
+                                onerror="this.onerror=null;this.src='{{ asset('home/img/favicon.png') }}';" alt=""
+                                class="mr-3 border rounded p-2"
+                                style="width: 90px; height: 90px; object-fit: contain;">
+                            <div class="flex-grow-1">
+                                <input type="file" name="admin_logo" class="form-control-file"
+                                    accept=".jpg,.jpeg,.png,.webp">
+                                <small class="text-muted">Gunakan versi ikon/persegi agar jelas pada sidebar ringkas.</small>
+                            </div>
                         </div>
                     </div>
                 </div>

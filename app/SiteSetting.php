@@ -10,6 +10,7 @@ class SiteSetting extends Model
         'system_name',
         'campus_name',
         'logo_path',
+        'admin_logo_path',
         'banner_1_path',
         'banner_2_path',
         'banner_3_path',
@@ -41,6 +42,7 @@ class SiteSetting extends Model
             'system_name' => 'LPM Smart Sistem',
             'campus_name' => 'Nama Perguruan Tinggi',
             'logo_path' => 'home/img/favicon.png',
+            'admin_logo_path' => 'home/img/favicon.png',
             'banner_1_path' => 'home/img/slide/slide-1.jpg',
             'banner_2_path' => 'home/img/slide/slide-2.jpg',
             'banner_3_path' => 'home/img/slide/slide-3.jpg',
@@ -92,6 +94,10 @@ class SiteSetting extends Model
         $defaults = static::defaults();
         $path = isset($settings[$key]) ? ltrim($settings[$key], '/') : null;
 
+        if ($key === 'admin_logo_path' && !$path) {
+            $path = isset($settings['logo_path']) ? ltrim($settings['logo_path'], '/') : null;
+        }
+
         if ($path && strpos($path, 'storage/site-settings/') === 0) {
             $filename = basename($path);
             $storedFile = storage_path('app/public/site-settings/' . $filename);
@@ -103,6 +109,10 @@ class SiteSetting extends Model
 
         if ($path && is_file(public_path($path))) {
             return asset($path);
+        }
+
+        if ($key === 'admin_logo_path' && !empty($settings['logo_path'])) {
+            return static::imageUrl($settings, 'logo_path');
         }
 
         return asset($defaults[$key]);
