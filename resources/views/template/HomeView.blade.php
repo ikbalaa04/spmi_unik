@@ -114,7 +114,7 @@
                 {{ $siteSettings['campus_name'] }}
             </div>
             <div class="credits">
-                Created by <a href="https://rickyginting.github.io/">RMG</a>
+                Created by <a target="_blank" href="https://rickyginting.github.io/">RMG</a> & Developed by <a target="_blank" href="https://inkamedia.id/">Inkamedia</a>
             </div>
         </div>
     </footer>
