@@ -68,7 +68,7 @@
                         <h3>Program Studi {{ $siteSettings['campus_name'] }}</h3>
                         <p class="fst-italic">
                             Daftar program studi yang terdaftar pada
-                            <strong>{{ $siteSettings['system_name'] }}</strong>.
+                            <strong>{{ $siteSettings['system_name'] ?: $siteSettings['campus_name'] }}</strong>.
                         </p>
                         <ul>
                             @foreach ($data['p'] as $i)

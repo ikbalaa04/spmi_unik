@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SiteSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SiteSettingController extends Controller
 {
@@ -17,7 +18,7 @@ class SiteSettingController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'system_name' => 'required|string|max:150',
+            'system_name' => 'nullable|string|max:150',
             'campus_name' => 'required|string|max:200',
             'hero_1_title' => 'required|string|max:150',
             'hero_1_description' => 'required|string|max:1000',
@@ -70,11 +71,22 @@ class SiteSettingController extends Controller
 
         foreach ($files as $input => $column) {
             if ($request->hasFile($input)) {
-                $settings->{$column} = $this->storeImage(
-                    $request->file($input),
-                    $input,
-                    $settings->{$column}
-                );
+                try {
+                    $settings->{$column} = $this->storeImage(
+                        $request->file($input),
+                        $input,
+                        $settings->{$column}
+                    );
+                } catch (\Throwable $exception) {
+                    report($exception);
+
+                    return redirect()
+                        ->back()
+                        ->withInput()
+                        ->withErrors([
+                            $input => 'Gambar gagal disimpan. Periksa ukuran file dan izin direktori storage.',
+                        ]);
+                }
             }
         }
 
@@ -87,23 +99,17 @@ class SiteSettingController extends Controller
 
     private function storeImage($file, $prefix, $oldPath = null)
     {
-        $directory = public_path('uploads/site-settings');
-
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
-        }
-
         $filename = $prefix . '-' . time() . '-' . bin2hex(random_bytes(4)) . '.' . $file->getClientOriginalExtension();
-        $file->move($directory, $filename);
+        $stored = Storage::disk('public')->putFileAs('site-settings', $file, $filename);
 
-        if ($oldPath && strpos($oldPath, 'uploads/site-settings/') === 0) {
-            $oldFile = public_path($oldPath);
-
-            if (is_file($oldFile)) {
-                unlink($oldFile);
-            }
+        if (!$stored) {
+            throw new \RuntimeException('Gambar gagal disimpan. Periksa izin direktori storage.');
         }
 
-        return 'uploads/site-settings/' . $filename;
+        if ($oldPath && strpos($oldPath, 'storage/site-settings/') === 0) {
+            Storage::disk('public')->delete(substr($oldPath, strlen('storage/')));
+        }
+
+        return 'storage/' . $stored;
     }
 }

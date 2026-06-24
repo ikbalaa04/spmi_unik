@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>{{ $siteSettings['system_name'] }} - {{ $title ?? 'Home' }}</title>
+    <title>{{ $siteSettings['system_name'] ?: $siteSettings['campus_name'] }} - {{ $title ?? 'Home' }}</title>
     <meta name="author" content="Ricky Martin Ginting">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -58,7 +58,9 @@
             <a href="{{ route('home') }}" class="logo me-auto d-flex align-items-center">
                 <img src="{{ asset($siteSettings['logo_path']) }}" alt="Logo {{ $siteSettings['campus_name'] }}"
                     class="img-fluid me-2">
-                <span>{{ $siteSettings['system_name'] }}</span>
+                @if ($siteSettings['system_name'])
+                    <span>{{ $siteSettings['system_name'] }}</span>
+                @endif
             </a>
 
             <nav id="navbar" class="navbar">
@@ -103,7 +105,10 @@
     <footer id="footer">
         <div class="container">
             <div class="copyright">
-                &copy; Copyright <strong><span>{{ $siteSettings['system_name'] }}</span></strong>.
+                &copy; Copyright
+                @if ($siteSettings['system_name'])
+                    <strong><span>{{ $siteSettings['system_name'] }}</span></strong>.
+                @endif
                 {{ $siteSettings['campus_name'] }}
             </div>
             <div class="credits">

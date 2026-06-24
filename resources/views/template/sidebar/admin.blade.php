@@ -5,7 +5,9 @@
         <div class="sidebar-brand-icon">
             <img src="{{ asset($siteSettings['logo_path']) }}" alt="" style="width: 36px; height: 36px; object-fit: contain;">
         </div>
-        <div class="sidebar-brand-text mx-3">{{ $siteSettings['system_name'] }}</div>
+        @if ($siteSettings['system_name'])
+            <div class="sidebar-brand-text mx-3">{{ $siteSettings['system_name'] }}</div>
+        @endif
     </a>
 
     <!-- Divider -->

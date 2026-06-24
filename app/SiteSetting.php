@@ -74,7 +74,7 @@ class SiteSetting extends Model
         $values = $settings->toArray();
 
         foreach ($defaults as $key => $default) {
-            if (!isset($values[$key]) || $values[$key] === '') {
+            if (!array_key_exists($key, $values) || $values[$key] === null) {
                 $values[$key] = $default;
             }
         }

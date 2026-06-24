@@ -39,7 +39,8 @@
                     <div class="form-group col-md-6">
                         <label>Nama Sistem</label>
                         <input type="text" name="system_name" class="form-control"
-                            value="{{ old('system_name', $settings['system_name']) }}" required>
+                            value="{{ old('system_name', $settings['system_name']) }}">
+                        <small class="text-muted">Boleh dikosongkan jika header hanya menampilkan logo.</small>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Nama Kampus</label>

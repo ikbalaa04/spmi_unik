@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="Ricky Martin Ginting">
 
-    <title>{{ $siteSettings['system_name'] }} - {{ $title ?? 'Dashboard' }}</title>
+    <title>{{ $siteSettings['system_name'] ?: $siteSettings['campus_name'] }} - {{ $title ?? 'Dashboard' }}</title>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-icon-57x57.png') }}">
@@ -124,8 +124,9 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>&copy; Copyright <strong><span>{{ $siteSettings['system_name'] }}</span></strong>. All Rights
-                            Reserved</span>
+                        <span>&copy; Copyright
+                            <strong><span>{{ $siteSettings['system_name'] ?: $siteSettings['campus_name'] }}</span></strong>.
+                            All Rights Reserved</span>
                     </div>
                 </div>
             </footer>
