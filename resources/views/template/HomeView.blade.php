@@ -60,9 +60,6 @@
                 <img src="{{ \App\SiteSetting::imageUrl($siteSettings, 'logo_path') }}"
                     onerror="this.onerror=null;this.src='{{ asset('home/img/favicon.png') }}';"
                     alt="Logo {{ $siteSettings['campus_name'] }}" class="img-fluid me-2">
-                @if ($siteSettings['system_name'])
-                    <span>{{ $siteSettings['system_name'] }}</span>
-                @endif
             </a>
 
             <nav id="navbar" class="navbar">
@@ -79,7 +76,7 @@
                             <li><a href="{{ route('singleSearch') }}">Single Search</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#"><span>Dokumen SPMI</span> <i class="bi bi-chevron-down"></i></a>
+                    <li class="dropdown"><a href="#"><span>Dokumen</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
                             @foreach ($data['p'] as $pr)
                                 <li><a href="{{ url('tabel/' . $pr->kode) }}">{{ $pr->name }}</a></li>
