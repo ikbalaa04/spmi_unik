@@ -81,4 +81,16 @@ class SiteSetting extends Model
 
         return $values;
     }
+
+    public static function imagePath(array $settings, $key)
+    {
+        $defaults = static::defaults();
+        $path = isset($settings[$key]) ? ltrim($settings[$key], '/') : null;
+
+        if ($path && is_file(public_path($path))) {
+            return $path;
+        }
+
+        return $defaults[$key];
+    }
 }

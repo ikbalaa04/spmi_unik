@@ -3,7 +3,9 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
         <div class="sidebar-brand-icon">
-            <img src="{{ asset($siteSettings['logo_path']) }}" alt="" style="width: 36px; height: 36px; object-fit: contain;">
+            <img src="{{ asset(\App\SiteSetting::imagePath($siteSettings, 'logo_path')) }}"
+                onerror="this.onerror=null;this.src='{{ asset('home/img/favicon.png') }}';" alt=""
+                style="width: 36px; height: 36px; object-fit: contain;">
         </div>
         @if ($siteSettings['system_name'])
             <div class="sidebar-brand-text mx-3">{{ $siteSettings['system_name'] }}</div>

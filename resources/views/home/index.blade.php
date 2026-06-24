@@ -8,7 +8,7 @@
             <div class="carousel-inner" role="listbox">
                 @for ($slide = 1; $slide <= 3; $slide++)
                     <div class="carousel-item {{ $slide === 1 ? 'active' : '' }}"
-                        style="background-image: url('{{ asset($siteSettings['banner_' . $slide . '_path']) }}')">
+                        style="background-image: url('{{ asset(\App\SiteSetting::imagePath($siteSettings, 'banner_' . $slide . '_path')) }}')">
                         <div class="carousel-container">
                             <div class="container">
                                 <h2 class="animate__animated animate__fadeInDown">
@@ -33,57 +33,38 @@
     </section>
 
     <main id="main">
-        <section id="featured-services" class="featured-services section-bg">
+        <section class="program-study-section">
             <div class="container">
-                <div class="row no-gutters">
-                    @php
-                        $featureIcons = ['bi-laptop', 'bi-briefcase', 'bi-calendar4-week'];
-                    @endphp
-                    @for ($feature = 1; $feature <= 3; $feature++)
-                        <div class="col-lg-4 col-md-6">
-                            <div class="icon-box">
-                                <div class="icon"><i class="bi {{ $featureIcons[$feature - 1] }}"></i></div>
-                                <h4 class="title">{{ $siteSettings['feature_' . $feature . '_title'] }}</h4>
-                                <p class="description">{{ $siteSettings['feature_' . $feature . '_description'] }}</p>
+                <div class="program-study-heading text-center">
+                    <span class="program-study-eyebrow">Program Pendidikan</span>
+                    <h3>Program Studi {{ $siteSettings['campus_name'] }}</h3>
+                    <p>Pilih program studi untuk melihat diagram pencapaian dan informasi asesmen.</p>
+                </div>
+
+                <div class="row program-study-grid">
+                    @forelse ($data['p'] as $index => $i)
+                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <a href="{{ url('diagram/' . $i->kode) }}" class="program-study-card">
+                                <span class="program-study-icon">
+                                    <i class="bi {{ $index % 2 === 0 ? 'bi-mortarboard-fill' : 'bi-building' }}"></i>
+                                </span>
+                                <span class="program-study-content">
+                                    <span class="program-study-code">{{ $i->kode }}</span>
+                                    <strong>{{ $i->name }}</strong>
+                                    @if ($i->jenjang)
+                                        <small>{{ $i->jenjang->name }} ({{ $i->jenjang->kode }})</small>
+                                    @endif
+                                </span>
+                                <i class="bi bi-arrow-right program-study-arrow"></i>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="col-12">
+                            <div class="program-study-empty">
+                                Belum ada program studi yang ditampilkan.
                             </div>
                         </div>
-                    @endfor
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="container">
-                <div class="section-title">
-                    <h2>{{ $siteSettings['about_title'] }}</h2>
-                    <p>{{ $siteSettings['about_description'] }}</p>
-                </div>
-
-                <div class="row align-items-center">
-                    <div class="col-lg-6 order-1 order-lg-2">
-                        <img src="{{ asset($siteSettings['about_image_path']) }}" class="img-fluid"
-                            alt="{{ $siteSettings['campus_name'] }}">
-                    </div>
-                    <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
-                        <h3>Program Studi {{ $siteSettings['campus_name'] }}</h3>
-                        <p class="fst-italic">
-                            Daftar program studi yang terdaftar pada
-                            <strong>{{ $siteSettings['system_name'] ?: $siteSettings['campus_name'] }}</strong>.
-                        </p>
-                        <ul>
-                            @foreach ($data['p'] as $i)
-                                <li>
-                                    <i class="bi bi-check-circled"></i>
-                                    <a href="{{ url('diagram/' . $i->kode) }}">
-                                        {{ $i->name }} - <b>{{ $i->kode }}</b>
-                                        @if ($i->jenjang)
-                                            ({{ $i->jenjang->kode }})
-                                        @endif
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                    @endforelse
                 </div>
             </div>
         </section>

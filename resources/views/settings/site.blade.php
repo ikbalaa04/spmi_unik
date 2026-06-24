@@ -52,7 +52,9 @@
                 <div class="form-group mb-0">
                     <label>Logo</label>
                     <div class="d-flex align-items-center">
-                        <img src="{{ asset($settings['logo_path']) }}" alt="" class="mr-3 border rounded p-2"
+                        <img src="{{ asset(\App\SiteSetting::imagePath($settings, 'logo_path')) }}"
+                            onerror="this.onerror=null;this.src='{{ asset('home/img/favicon.png') }}';" alt=""
+                            class="mr-3 border rounded p-2"
                             style="width: 90px; height: 90px; object-fit: contain;">
                         <div class="flex-grow-1">
                             <input type="file" name="logo" class="form-control-file" accept=".jpg,.jpeg,.png,.webp">
@@ -71,7 +73,8 @@
                 @for ($slide = 1; $slide <= 3; $slide++)
                     <div class="border rounded p-3 mb-4">
                         <h6 class="font-weight-bold">Slide {{ $slide }}</h6>
-                        <img src="{{ asset($settings['banner_' . $slide . '_path']) }}"
+                        <img src="{{ asset(\App\SiteSetting::imagePath($settings, 'banner_' . $slide . '_path')) }}"
+                            onerror="this.onerror=null;this.src='{{ asset('home/img/slide/slide-' . $slide . '.jpg') }}';"
                             class="img-fluid rounded mb-3" alt="" style="width: 100%; max-height: 240px; object-fit: cover;">
                         <div class="form-group">
                             <label>Gambar Banner</label>
@@ -95,32 +98,6 @@
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Keunggulan Sistem</h6>
-            </div>
-            <div class="card-body">
-                <div class="form-row">
-                    @for ($feature = 1; $feature <= 3; $feature++)
-                        <div class="col-lg-4">
-                            <div class="border rounded p-3 h-100">
-                                <div class="form-group">
-                                    <label>Judul {{ $feature }}</label>
-                                    <input type="text" name="feature_{{ $feature }}_title" class="form-control"
-                                        value="{{ old('feature_' . $feature . '_title', $settings['feature_' . $feature . '_title']) }}"
-                                        required>
-                                </div>
-                                <div class="form-group mb-0">
-                                    <label>Deskripsi</label>
-                                    <textarea name="feature_{{ $feature }}_description" class="form-control" rows="5" required>{{ old('feature_' . $feature . '_description', $settings['feature_' . $feature . '_description']) }}</textarea>
-                                </div>
-                            </div>
-                        </div>
-                    @endfor
-                </div>
-            </div>
-        </div>
-
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Bagian Informasi</h6>
             </div>
             <div class="card-body">
@@ -137,7 +114,9 @@
                     <label>Gambar Pendukung</label>
                     <div class="row align-items-center">
                         <div class="col-md-4 mb-3 mb-md-0">
-                            <img src="{{ asset($settings['about_image_path']) }}" class="img-fluid rounded border" alt="">
+                            <img src="{{ asset(\App\SiteSetting::imagePath($settings, 'about_image_path')) }}"
+                                onerror="this.onerror=null;this.src='{{ asset('home/img/about.png') }}';"
+                                class="img-fluid rounded border" alt="">
                         </div>
                         <div class="col-md-8">
                             <input type="file" name="about_image" class="form-control-file"
