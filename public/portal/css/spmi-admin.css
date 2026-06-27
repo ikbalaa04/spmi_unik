@@ -581,6 +581,11 @@
     font-weight: 900;
     height: 40px;
     justify-content: center;
+    line-height: 1;
+    margin: 0;
+    min-width: 40px;
+    text-align: center;
+    width: 40px;
 }
 
 .user-name-cell strong {

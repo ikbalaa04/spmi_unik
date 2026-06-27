@@ -1,56 +1,70 @@
 @extends('template.HomeView')
 @section('content')
-
-
     <main id="main">
-
-
-        <!-- ======= About Us Section ======= -->
-        <section>
+        <section class="public-document-section">
             <div class="container">
-
-                <div class="section-title">
-                    <h2>{{ $e->l1->name }}</h2>
-                    <p>{!! $e->indikator->dec !!}</p>
+                <div class="public-page-heading">
+                    <span>Dokumen Mutu</span>
+                    <h2>{{ optional($e->l1)->name ?? 'Daftar Berkas' }}</h2>
+                    <p>{!! optional($e->indikator)->dec ?? 'Daftar dokumen pendukung untuk elemen penilaian.' !!}</p>
                 </div>
 
-                <div class="row">
+                <div class="public-table-card">
+                    <div class="public-table-card-header">
+                        <div>
+                            <h3>Berkas dan Nilai</h3>
+                            <p>Dokumen pendukung yang terhubung dengan elemen ini.</p>
+                        </div>
+                        <span class="public-count-pill">
+                            <i class="fa fa-file-text-o"></i>
+                            {{ $b->count() }} Berkas
+                        </span>
+                    </div>
+
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table public-document-table" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th width="150px">Dec</th>
-                                    <th width="150px">Score</th>
+                                    <th style="width: 54%;">Berkas</th>
+                                    <th>Keterangan</th>
+                                    <th style="width: 120px;">Nilai</th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th width="150px">Dec</th>
-                                    <th width="150px">Score</th>
-                                </tr>
-                            </tfoot>
                             <tbody>
-                                @foreach ($b as $i)
+                                @forelse ($b as $i)
                                     <tr>
-                                        <td><a href="{{ url('tabel/view/' . $i->id) }}"
-                                                target="_blank">{{ $i->file_name }}</a>
+                                        <td>
+                                            <a href="{{ url('tabel/view/' . $i->id) }}" target="_blank"
+                                                class="public-file-link">
+                                                <i class="fa fa-file-text-o"></i>
+                                                <span>{{ $i->file_name }}</span>
+                                            </a>
                                         </td>
-                                        <td>{!! $i->dec !!}</td>
-                                        <td>{{ $i->score }}</td>
+                                        <td>
+                                            <div class="public-element-content">
+                                                {!! $i->dec ?: '<span>Tidak ada keterangan tambahan.</span>' !!}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="public-score-badge">{{ $i->score ?? '-' }}</span>
+                                        </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="public-empty-state">
+                                                <i class="fa fa-folder-open-o"></i>
+                                                <strong>Belum ada berkas</strong>
+                                                <span>Dokumen untuk elemen ini belum tersedia.</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
         </section>
-        <!-- End About Us Section -->
-
-
     </main>
-    <!-- End #main -->
 @endsection

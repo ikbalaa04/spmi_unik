@@ -1,93 +1,87 @@
-@extends('template.HomeView',['title'=>"$p->name"])
+@extends('template.HomeView', ['title' => "$p->name"])
+
 @section('content')
-
-
     <main id="main">
-
-
-        <!-- ======= About Us Section ======= -->
-        <section>
+        <section class="public-document-section">
             <div class="container">
-
-                <div class="section-title">
+                <div class="public-page-heading">
+                    <span>Dokumen Mutu</span>
                     <h2>{{ $p->name }}</h2>
+                    <p>Daftar elemen asesmen dan dokumen pendukung yang tersedia untuk program studi ini.</p>
                 </div>
 
-                <div class="row">
+                <div class="public-table-card">
+                    <div class="public-table-card-header">
+                        <div>
+                            <h3>Daftar Elemen</h3>
+                            <p>Gunakan pencarian untuk menemukan elemen atau indikator tertentu.</p>
+                        </div>
+                        <span class="public-count-pill">
+                            <i class="bi bi-list-check"></i>
+                            {{ $e->count() }} Elemen
+                        </span>
+                    </div>
+
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table public-document-table" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>No.</th>
                                     <th>Element</th>
-                                    <th width="150px">Berkas</th>
+                                    <th width="170px">Berkas</th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Element</th>
-                                    <th width="150px">Berkas</th>
-                                </tr>
-                            </tfoot>
                             <tbody>
-                                <?php $no = 1; ?>
                                 @foreach ($e as $i)
                                     <tr>
-                                        <td>{{ $no }}</td>
-                                        @if (($i->l2_id == 0) & ($i->l3_id == 0) & ($i->l4_id == 0))
-                                            <td>
-                                                <b>{{ $i->l1->name }}</b><br>
-                                                {!! $i->indikator->dec !!}
-                                            </td>
-                                        @elseif($i->l3_id == 0 & $i->l4_id == 0)
-                                            <td>
-                                                <b>{{ $i->l1->name }}</b><br>
-                                                {{ $i->l2->name }}<br>
-                                                {!! $i->indikator->dec !!}
-                                            </td>
-                                        @elseif($i->l4_id == 0)
-                                            <td>
-                                                <b>{{ $i->l1->name }}</b><br>
-                                                {{ $i->l2->name }}<br>
-                                                {{ $i->l3->name }}<br>
-                                                {!! $i->indikator->dec !!}
-                                            </td>
-                                        @else()
-                                            <td>
-                                                <b>{{ $i->l1->name }}</b><br>
-                                                {{ $i->l2->name }}<br>
-                                                {{ $i->l3->name }}<br>
-                                                {{ $i->l4->name }}<br>
-                                                {!! $i->indikator->dec !!}
-                                            </td>
-                                        @endif
                                         <td>
-                                            <div class="dropdown open">
-                                                <button class="btn btn-primary dropdown-toggle" type="button" id="triggerId"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="public-row-number">{{ $loop->iteration }}</span>
+                                        </td>
+                                        <td>
+                                            <div class="public-element-content">
+                                                <strong>{{ $i->l1->name }}</strong>
+
+                                                @if ($i->l3_id == 0 && $i->l4_id == 0 && $i->l2_id != 0)
+                                                    <span>{{ $i->l2->name }}</span>
+                                                @elseif($i->l4_id == 0 && $i->l3_id != 0)
+                                                    <span>{{ $i->l2->name }}</span>
+                                                    <span>{{ $i->l3->name }}</span>
+                                                @elseif($i->l4_id != 0)
+                                                    <span>{{ $i->l2->name }}</span>
+                                                    <span>{{ $i->l3->name }}</span>
+                                                    <span>{{ $i->l4->name }}</span>
+                                                @endif
+
+                                                <div>{!! $i->indikator->dec !!}</div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown public-file-dropdown">
+                                                <button class="btn public-file-button dropdown-toggle" type="button"
+                                                    id="triggerId{{ $i->id }}" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <i class="bi bi-folder2-open"></i>
                                                     Berkas
                                                 </button>
-                                                <div class="dropdown-menu" aria-labelledby="triggerId">
-                                                    <a class="dropdown-item"
-                                                        href="{{ url('tabel/berkas/' . $i->id) }}">Lihat
-                                                        Berkas ({{ $i->count_berkas }})</a>
+                                                <div class="dropdown-menu public-file-menu"
+                                                    aria-labelledby="triggerId{{ $i->id }}">
+                                                    <a class="dropdown-item" href="{{ url('tabel/berkas/' . $i->id) }}">
+                                                        <span class="public-file-menu-label">
+                                                            <i class="bi bi-eye"></i>
+                                                            Lihat Berkas
+                                                        </span>
+                                                        <span class="public-file-menu-count">{{ $i->count_berkas }}</span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-                                    <?php $no++; ?>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </div>
         </section>
-        <!-- End About Us Section -->
-
-
     </main>
-    <!-- End #main -->
 @endsection
