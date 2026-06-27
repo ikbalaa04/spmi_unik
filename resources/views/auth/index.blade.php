@@ -6,47 +6,33 @@
     @endphp
 
     <main class="spmi-login-shell">
-        <section class="spmi-login-hero">
-            <div class="spmi-login-nav">
+        <div class="spmi-login-card spmi-login-composite">
+            <section class="spmi-login-hero">
                 <a href="{{ route('home') }}" class="spmi-login-logo">
                     <img src="{{ \App\SiteSetting::imageUrl($siteSettings, 'logo_path') }}"
                         onerror="this.onerror=null;this.src='{{ asset('home/img/favicon.png') }}';"
                         alt="Logo {{ $campusName }}">
-                    <span>{{ $systemName }}</span>
                 </a>
-                <a href="{{ route('home') }}" class="spmi-login-back">
-                    <i class="fas fa-home"></i>
-                    Kembali ke Home
-                </a>
-            </div>
 
-            <div class="spmi-login-hero-content">
-                <span class="spmi-login-eyebrow">Portal Mutu Internal</span>
-                <h1>{{ $systemName }}</h1>
-                <p>
-                    Masuk untuk mengelola data asesmen, dokumen akreditasi, diagram pencapaian, dan informasi mutu
-                    {{ $campusName }}.
-                </p>
+                <div class="spmi-login-hero-content">
+                    <span class="spmi-login-eyebrow">Portal Mutu Internal</span>
+                    <h1>{{ $systemName }}</h1>
+                    <p>{{ $campusName }}</p>
 
-                <div class="spmi-login-benefits">
-                    <div>
-                        <i class="fas fa-chart-pie"></i>
-                        <span>Monitoring pencapaian</span>
-                    </div>
-                    <div>
-                        <i class="fas fa-file-alt"></i>
-                        <span>Arsip dokumen terpusat</span>
-                    </div>
-                    <div>
-                        <i class="fas fa-medal"></i>
-                        <span>Data akreditasi prodi</span>
+                    <div class="spmi-login-benefits">
+                        <div>
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Monitoring Pencapaian</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-file-alt"></i>
+                            <span>Dokumen Akreditasi</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="spmi-login-panel">
-            <div class="spmi-login-card">
+            <section class="spmi-login-panel">
                 <div class="spmi-login-card-header">
                     <div>
                         <span class="spmi-login-eyebrow">Area Administrator</span>
@@ -98,8 +84,12 @@
                     <strong>{{ $campusName }}</strong>
                     <span>© {{ date('Y') }} {{ $systemName }}</span>
                 </div>
-            </div>
-        </section>
+                <a href="{{ route('home') }}" class="spmi-login-back">
+                    <i class="fas fa-arrow-left"></i>
+                    Kembali ke Website
+                </a>
+            </section>
+        </div>
     </main>
 
     <script>

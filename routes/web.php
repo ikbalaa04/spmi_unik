@@ -57,6 +57,8 @@ Route::middleware(['auth', 'cekRole:Admin,Ketua LPM,Ketua Program Studi,Dosen,UP
 
 //DASHBOARD
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('profil', 'ProfileController@edit')->name('profile.edit');
+    Route::put('profil', 'ProfileController@update')->name('profile.update');
 
 //Jenjang
     foreach ($j as $jenjang) {

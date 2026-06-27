@@ -56,7 +56,7 @@
                 <div class="form-group col-lg-6">
                     <label for="fakultas"><i class="fas fa-building"></i> Fakultas</label>
                     <input type="text" name="fakultas" id="fakultas" class="form-control"
-                        value="{{ old('fakultas') }}" placeholder="Contoh: Fakultas Teknik" required>
+                        value="{{ old('fakultas') }}" placeholder="Contoh: Fakultas Tarbiyah" required>
                 </div>
                 <div class="form-group col-lg-4">
                     <label for="peringkat"><i class="fas fa-medal"></i> Peringkat Akreditasi</label>
