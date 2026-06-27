@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sistem Penjamin Mutu Internal - Login</title>
+    <title>{{ $siteSettings['system_name'] ?: $siteSettings['campus_name'] }} - Login</title>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-icon-57x57.png') }}">
@@ -32,23 +32,20 @@
 
 
     <!-- Custom fonts for this template-->
-    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    <link href="{{ asset('portal/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('portal/css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ asset('portal/css/spmi-admin.css') }}?v={{ filemtime(public_path('portal/css/spmi-admin.css')) }}"
+        rel="stylesheet">
 
 </head>
 
-<body class="bg-gradient-primary">
-
-    <div class="container">
+<body class="spmi-auth-page">
 
         @yield('auth')
-
-    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('portal/vendor/jquery/jquery.min.js') }}"></script>

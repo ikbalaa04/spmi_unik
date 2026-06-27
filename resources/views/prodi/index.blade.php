@@ -167,7 +167,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="">Nama Program Pendidikan</label>
-                            <input type="text" name="name" class="form-control" placeholder="Teknik Informatika"
+                            <input type="text" name="name" class="form-control" placeholder="Pendidikan Agama Islam"
                                 aria-describedby="helpId" required>
                         </div>
 
